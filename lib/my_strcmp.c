@@ -4,6 +4,7 @@
 ** File description:
 ** Infos
 */
+
 int my_strcmp(char const *s1, char const *s2)
 {
     while (*s1 && (*s1 == *s2)) {

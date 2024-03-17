@@ -4,7 +4,8 @@
 ** File description:
 ** Infos
 */
-#include <stddef.h>
+#include "../src/my.h"
+
 char *my_strncpy(char *dest, char const *src, int n)
 {
     int i = 0;

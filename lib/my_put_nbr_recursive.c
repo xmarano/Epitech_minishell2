@@ -4,8 +4,7 @@
 ** File description:
 ** Infos
 */
-#include "../my.h"
-#include <unistd.h>
+#include "../src/my.h"
 
 int my_put_nbr_recursive(int nb)
 {

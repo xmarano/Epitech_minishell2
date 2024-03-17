@@ -19,11 +19,11 @@ SRCLIB	=	lib/my_atoi.c 		\
 			lib/my_strncpy.c 	\
 			lib/str_to_word_array.c 	\
 
-SRCNAME	=	main.c				\
-			istty.c 			\
-			isnottty.c 			\
-			isnottty2.c 			\
-			check_setenv_cd.c 	\
+SRCNAME	=	src/main.c				\
+			src/istty.c 			\
+			src/isnottty.c 			\
+			src/isnottty2.c 		\
+			src/check_setenv_cd.c 	\
 
 LIB 	=	libmy.a
 

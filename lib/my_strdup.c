@@ -4,9 +4,7 @@
 ** File description:
 ** Infos
 */
-#include "../my.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "../src/my.h"
 
 char *my_strdup(char const *src)
 {
