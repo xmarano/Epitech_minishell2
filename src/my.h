@@ -12,6 +12,8 @@
 #include <signal.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <dirent.h>
 #ifndef MY_H
     #define MY_H
 int my_put_nbr(int nb);
@@ -27,4 +29,5 @@ char *my_strcpy(char *dest, char const *src);
 char *my_strcat(char *dest, char const *src);
 int my_strcmp(char const *s1, char const *s2);
 char *my_strncpy(char *dest, char const *src, int n);
+int my_strncmp(const char *str1, const char *str2, size_t n);
 #endif
