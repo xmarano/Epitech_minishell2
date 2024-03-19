@@ -53,6 +53,8 @@ static void input_to_arr2(S_t *s, char **env)
 
 int echo_command(char **argv, char **env, S_t *s)
 {
+    DIR *dir;
+
     input_to_arr2(s, env);
     if (my_strcmp(s->arr[0], "setenv") == 0
     || my_strcmp(s->arr[0], "unsetenv") == 0
@@ -60,6 +62,11 @@ int echo_command(char **argv, char **env, S_t *s)
         return check_setenv_cd(argv, env, s);
     check_basic2(s);
     s->str = malloc(my_strlen(s->arr[0]) * sizeof(char));
+    dir = opendir(s->arr[0]);
+    if (dir != NULL) {
+        my_printf("%s: Permission denied.\n", s->arr[0]);
+        return 0;
+    }
     shell_command2(argv, env, s);
     return 0;
 }
