@@ -90,9 +90,27 @@ static int cd_dir_to_env(char **env, S_t *s, char *str)
         if (my_strncmp(env[nb], "PWD=", 4) == 0)
             break;
     }
-    env[nb] = my_strcat(env[nb], "/");
-    env[nb] = my_strcat(env[nb], str);
+    if (str[0] != '.') {
+        env[nb] = my_strcat(env[nb], "/");
+        env[nb] = my_strcat(env[nb], str);
+    }
     return 0;
+}
+
+static int cd_dir_check(S_t *s, char *str, int *i)
+{
+    if (s->arr[1][0] == '.' && s->arr[1][1] == '/') {
+        if (s->arr[1][2] == '\0') {
+            str = my_strcpy(str, ".");
+            *i = 1;
+            return 0;
+        }
+        for (; s->arr[1][(*i) + 2] != '\0'; (*i)++) {
+            str[(*i)] = s->arr[1][(*i) + 2];
+        }
+        return 0;
+    }
+    return 1;
 }
 
 static int cd_dir(char **env, S_t *s)
@@ -101,11 +119,7 @@ static int cd_dir(char **env, S_t *s)
     int i = 0;
     char *str = malloc(my_strlen(s->arr[1]) * sizeof(char));
 
-    if (s->arr[1][0] == '.' && s->arr[1][1] == '/') {
-        for (; s->arr[1][i + 2] != '\0'; i++) {
-            str[i] = s->arr[1][i + 2];
-        }
-    } else {
+    if (cd_dir_check(s, str, &i) != 0) {
         for (; s->arr[1][i] != '\0'; i++)
             str[i] = s->arr[1][i];
     }
