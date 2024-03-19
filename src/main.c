@@ -115,17 +115,19 @@ static int cd_dir_check(S_t *s, char *str, int *i)
 
 static int cd_dir(char **env, S_t *s)
 {
-    DIR *dir;
     int i = 0;
     char *str = malloc(my_strlen(s->arr[1]) * sizeof(char));
 
-    if (cd_dir_check(s, str, &i) != 0) {
+    if (cd_dir_check(s, str, &i) == 1) {
         for (; s->arr[1][i] != '\0'; i++)
             str[i] = s->arr[1][i];
     }
     str[i] = '\0';
-    if (cd_dir_to_env(env, s, str) == 1)
+    if (cd_dir_to_env(env, s, str) == 1) {
+        chdir(str);
         return 1;
+    }
+    chdir(str);
     return 0;
 }
 
@@ -134,18 +136,26 @@ static int cd_old_to_new(char **env, S_t *s)
     char *pwd;
     int nb = 0;
     int pwd_0;
+    char *old_chdir;
 
     for (; env[nb] != NULL; nb++) {
         if (my_strncmp(env[nb], "PWD=", 4) == 0)
             break;
     }
-    pwd = malloc(my_strlen(env[nb]) * sizeof(char));
+    pwd = malloc((my_strlen(env[nb]) + 1) * sizeof(char));
     for (int i = 0; env[nb + 1][i + 3] != '\0'; i++) {
         pwd[i] = env[nb + 1][i + 3];
         pwd_0 = i + 3;
     }
     pwd[pwd_0 + 1] = '\0';
     env[nb] = pwd;
+    old_chdir = malloc(my_strlen(env[nb]) * sizeof(char));
+    for (int i = 0; env[nb][i + 4] != '\0'; i++) {
+        old_chdir[i] = env[nb][i + 4];
+        pwd_0 = i;
+    }
+    old_chdir[pwd_0 + 1] = '\0';
+    chdir(old_chdir);
     return 0;
 }
 
