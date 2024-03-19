@@ -115,6 +115,26 @@ static int cd_dir(char **env, S_t *s)
     return 0;
 }
 
+static int cd_old_to_new(char **env, S_t *s)
+{
+    char *pwd;
+    int nb = 0;
+    int pwd_0;
+
+    for (; env[nb] != NULL; nb++) {
+        if (my_strncmp(env[nb], "PWD=", 4) == 0)
+            break;
+    }
+    pwd = malloc(my_strlen(env[nb]) * sizeof(char));
+    for (int i = 0; env[nb + 1][i + 3] != '\0'; i++) {
+        pwd[i] = env[nb + 1][i + 3];
+        pwd_0 = i + 3;
+    }
+    pwd[pwd_0 + 1] = '\0';
+    env[nb] = pwd;
+    return 0;
+}
+
 static int cd_file(S_t *s)
 {
     int a;
@@ -140,6 +160,8 @@ int do_cd(char **argv, char **env, S_t *s)
         return 0;
     }
     if (cd_dir(env, s) == 0)
+        return 0;
+    if (s->arr[1][0] == '-' && cd_old_to_new(env, s) == 0)
         return 0;
     cd_file(s);
     return 1;
