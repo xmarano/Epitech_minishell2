@@ -33,4 +33,5 @@ void path_to_bin(S_t *s, char **env, int i);
 void istty(char **argv, char **env, S_t *s);
 int isnottty(char **argv, char **env, S_t *s);
 int check_setenv_cd(char **argv, char **env, S_t *s);
+void old_chdir_func(char **env, char *old_chdir, int pwd_0, int nb);
 #endif

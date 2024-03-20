@@ -46,14 +46,14 @@ static int setenv_error_modify_add(char **argv, char **env, S_t *s)
 {
     if (s->arr[1][0] < 65 || s->arr[1][0] > 90 && s->arr[1][0] < 97
     || s->arr[1][0] > 122) {
-        write(1, "setenv: Variable name must begin with a letter.\n", 49);
+        write(1, "setenv: Variable name must begin with a letter.\n", 48);
         return 1;
     }
     for (int i = 1; s->arr[1][i] != '\0'; i++) {
         if (s->arr[1][i] > 9 && s->arr[1][i] < 65 || s->arr[1][i] > 90
         && s->arr[1][i] < 97 || s->arr[1][i] > 122) {
-            write(1, "setenv: Variable name must contain ", 36);
-            write(1, "alphanumeric characters.\n", 26);
+            write(1, "setenv: Variable name must contain ", 35);
+            write(1, "alphanumeric characters.\n", 25);
             return 1;
         }
     }

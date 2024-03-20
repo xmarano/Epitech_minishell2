@@ -34,3 +34,12 @@ void remove_n(S_t *s)
     if (s->input[n] == '\n')
         s->input[n] = '\0';
 }
+
+void old_chdir_func(char **env, char *old_chdir, int pwd_0, int nb)
+{
+    for (int i = 0; env[nb][i + 4] != '\0'; i++) {
+        old_chdir[i] = env[nb][i + 4];
+        pwd_0 = i;
+    }
+    old_chdir[pwd_0 + 1] = '\0';
+}

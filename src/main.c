@@ -150,11 +150,7 @@ static int cd_old_to_new(char **env, S_t *s)
     pwd[pwd_0 + 1] = '\0';
     env[nb] = pwd;
     old_chdir = malloc(my_strlen(env[nb]) * sizeof(char));
-    for (int i = 0; env[nb][i + 4] != '\0'; i++) {
-        old_chdir[i] = env[nb][i + 4];
-        pwd_0 = i;
-    }
-    old_chdir[pwd_0 + 1] = '\0';
+    old_chdir_func(env, old_chdir, pwd_0, nb);
     chdir(old_chdir);
     return 0;
 }
