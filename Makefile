@@ -25,6 +25,7 @@ SRCNAME	=	src/main.c				\
 			src/isnottty.c 			\
 			src/isnottty2.c 		\
 			src/check_setenv_cd.c 	\
+			src/minishell2.c 	\
 
 LIB 	=	libmy.a
 

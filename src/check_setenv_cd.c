@@ -9,13 +9,21 @@
 
 static void add_setenv(char **env, S_t *s)
 {
+    int len_arr = 0;
+
     for (int i = 0; env[i] != NULL; i++)
         s->last = i;
-    s->new_line = malloc(my_strlen(s->arr[1] + 1 * sizeof(char)));
+    for (int i = 1; s->arr[i] != NULL; i++)
+        len_arr = len_arr + my_strlen(s->arr[i]);
+    if (s->arr[2] != NULL)
+        s->new_line = malloc(len_arr + 1 * sizeof(char));
+    else
+        s->new_line = malloc(my_strlen(s->arr[1]) + 1 * sizeof(char));
     s->new_line = my_strcat(s->new_line, s->arr[1]);
     s->new_line = my_strcat(s->new_line, "=");
     if (s->arr[2] != NULL)
         s->new_line = my_strcat(s->new_line, s->arr[2]);
+    s->new_line = my_strcat(s->new_line, "\0");
     env[s->last + 1] = s->new_line;
     env[s->last + 2] = NULL;
 }

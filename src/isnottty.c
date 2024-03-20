@@ -67,6 +67,8 @@ int echo_command(char **argv, char **env, S_t *s)
         my_printf("%s: Permission denied.\n", s->arr[0]);
         return 0;
     }
+    if (s->arr[1] != NULL && minishell2(s) == 1)
+        return 0;
     shell_command2(argv, env, s);
     return 0;
 }

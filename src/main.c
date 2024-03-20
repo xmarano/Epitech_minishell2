@@ -56,25 +56,28 @@ int main(int argc, char **argv, char **env)
     return shell(argv, env);
 }
 
-static void cd_alone(char **env)
+static void cd_alone(char **env, char *str)
 {
     int nb = 0;
-    int nb2 = 0;
-    int slash = 0;
     int i = 0;
-    char *str;
 
+    for (; env[nb] != NULL; nb++) {
+        if (my_strncmp(env[nb], "HOME=", 5) == 0)
+            break;
+    }
+    str = malloc(my_strlen(env[nb]) * sizeof(char));
+    for (; env[nb][i + 5] != '\0'; i++)
+        str[i] = env[nb][i + 5];
+    str[i] = '\0';
+    i = 0;
     for (; env[nb] != NULL; nb++) {
         if (my_strncmp(env[nb], "PWD=", 4) == 0)
             break;
     }
-    for (; slash < 3; i++) {
-        if (env[nb][i] == '/')
-            slash++;
-        str[i] = env[nb][i];
-    }
-    str[i - 1] = '\0';
-    env[nb] = str;
+    for (; str[i] != '\0'; i++)
+        env[nb][i + 4] = str[i];
+    env[nb][i + 4] = '\0';
+    chdir(str);
 }
 
 static int cd_dir_to_env(char **env, S_t *s, char *str)
@@ -171,12 +174,14 @@ static int cd_file(S_t *s)
 
 int do_cd(char **argv, char **env, S_t *s)
 {
+    char *str;
+
     if (s->arr[2] != NULL) {
         my_printf("cd: string not in pwd: %s\n", s->arr[1]);
         return 1;
     }
     if (s->arr[1] == NULL) {
-        cd_alone(env);
+        cd_alone(env, str);
         return 0;
     }
     if (cd_dir(env, s) == 0)

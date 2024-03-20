@@ -25,6 +25,7 @@ typedef struct S {
     char *str;
 } S_t;
 
+int minishell2(S_t *s);
 void remove_n(S_t *s);
 void error_handling2(S_t *s);
 void error_handling_backslash(S_t *s);
