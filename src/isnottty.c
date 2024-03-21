@@ -150,7 +150,7 @@ int isnottty(char **argv, char **env, S_t *s)
             s->arr_path[0] = NULL;
         error_handling_backslash(s);
         if (s->nb == my_strlen(s->input))
-            return 0;
+            continue;
         remove_n(s);
         error_handling2(s);
         if (s->nb != 0) {
