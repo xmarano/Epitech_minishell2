@@ -69,6 +69,7 @@ static void redirection_right(S_t *s, char **env)
 
 int minishell2(S_t *s, char **env)
 {
+    s->pipe = 0;
     if (error_shell2(s) == 1)
         return 1;
     if (my_strcmp(s->arr[s->pipe], ">") == 0
