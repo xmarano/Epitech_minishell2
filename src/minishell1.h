@@ -23,9 +23,10 @@ typedef struct S {
     char **env_copy;
     int env_2_modify;
     char *str;
+    int pipe;
 } S_t;
 
-int minishell2(S_t *s);
+int minishell2(S_t *s, char **env);
 void remove_n(S_t *s);
 void error_handling2(S_t *s);
 void error_handling_backslash(S_t *s);
