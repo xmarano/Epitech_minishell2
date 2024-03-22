@@ -22,8 +22,10 @@ static int error_shell2(S_t *s)
     dir = opendir(s->arr[s->pipe + 1]);
     if (dir != NULL) {
         my_printf("%s: Is a directory.\n", s->arr[s->pipe + 1]);
+        closedir(dir);
         return 1;
     }
+    closedir(dir);
     return 0;
 }
 
@@ -54,15 +56,18 @@ static int command(S_t *s, char **env)
 static void redirection_right(S_t *s, char **env)
 {
     int file;
+    char *name = s->arr[s->pipe + 1];
+    int cpy_stdout = dup(1);
 
-    if (my_strcmp2(s->arr[s->pipe], ">") == 0) {
-        file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-    } else if (my_strcmp2(s->arr[s->pipe], ">>") == 0)
-        file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+    if (my_strcmp2(s->arr[s->pipe], ">") == 0)
+        file = open(name, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    else if (my_strcmp2(s->arr[s->pipe], ">>") == 0)
+        file = open(name, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
     dup2(file, STDOUT_FILENO);
-    close(file);
     s->arr[s->pipe] = NULL;
     command(s, env);
+    close(file);
+    dup2(cpy_stdout, STDOUT_FILENO);
     return;
 }
 

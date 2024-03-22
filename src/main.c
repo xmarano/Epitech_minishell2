@@ -86,8 +86,10 @@ static int cd_dir_to_env(char **env, S_t *s, char *str)
     int nb = 0;
 
     dir = opendir(str);
-    if (dir == NULL)
+    if (dir == NULL) {
+        closedir(dir);
         return 1;
+    }
     closedir(dir);
     for (; env[nb] != NULL; nb++) {
         if (my_strncmp(env[nb], "PWD=", 4) == 0)
@@ -165,6 +167,7 @@ static int cd_file(S_t *s)
     a = open(s->arr[1], O_RDONLY);
     if (a == -1) {
         my_printf("%s: No such file or directory.\n", s->arr[1]);
+        close(a);
         return 0;
     }
     my_printf("%s: Not a directory.\n", s->arr[1]);
