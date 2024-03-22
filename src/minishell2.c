@@ -55,11 +55,13 @@ static void redirection_right(S_t *s, char **env)
 {
     int file;
     char *command = s->arr[0];
+    int a = my_strcmp(s->arr[s->pipe], ">");
 
-    my_printf("(%s)\n", s->arr[s->pipe + 1]);
-    if (my_strcmp(s->arr[s->pipe], ">") == 0)
+    my_printf("variable a = (%d)\n", a);
+    if (a == 0) {
+        my_printf("(%s)\n", s->arr[s->pipe + 1]);
         file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-    else if (my_strcmp(s->arr[s->pipe], ">>") == 0)
+    } else if (my_strcmp(s->arr[s->pipe], ">>") == 0)
         file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
     dup2(file, STDOUT_FILENO);
     s->arr[s->pipe] = NULL;
