@@ -55,7 +55,7 @@ static void redirection_right(S_t *s, char **env)
 {
     int file;
     char *command = s->arr[0];
-    int a = strcmp(s->arr[s->pipe], ">");
+    int a = my_strcmp(s->arr[s->pipe], ">");
 
     my_printf("variable a = (%d)\n", a);
     if (a == 0) {
