@@ -58,9 +58,9 @@ static void redirection_right(S_t *s, char **env)
 
     my_printf("(%s)\n", s->arr[s->pipe + 1]);
     if (my_strcmp(s->arr[s->pipe], ">") == 0)
-        file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+        file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
     else if (my_strcmp(s->arr[s->pipe], ">>") == 0)
-        file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
+        file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
     dup2(file, STDOUT_FILENO);
     s->arr[s->pipe] = NULL;
     command_test(s, env);
