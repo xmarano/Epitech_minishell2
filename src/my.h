@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <dirent.h>
+#include <sys/wait.h>
 #ifndef MY_H
     #define MY_H
 int my_put_nbr(int nb);

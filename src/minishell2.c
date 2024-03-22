@@ -56,6 +56,7 @@ static void redirection_right(S_t *s, char **env)
     int file;
     char *command = s->arr[0];
 
+    my_printf("(%s)\n", s->arr[s->pipe + 1]);
     if (my_strcmp(s->arr[s->pipe], ">") == 0)
         file = open(s->arr[s->pipe + 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
     else if (my_strcmp(s->arr[s->pipe], ">>") == 0)
